@@ -20,6 +20,7 @@ public class Assignment extends LinkedHashMap<RandomVariable,Object> {
     public static final long serialVersionUID = 1L;
 
     public Assignment() {
+    //Change here
 	super();
     }
 
