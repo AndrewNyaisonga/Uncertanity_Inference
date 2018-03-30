@@ -10,13 +10,14 @@ public class ExactInference {
 	
 	private BayesianNetwork B;
 	
-	ExactInference(){
-		B= new BayesianNetwork();
+	public ExactInference(BayesianNetwork bn){
+		this.B= bn;
 	}
 	public Distribution ENUMERATIONASK(RandomVariable X, Assignment e, BayesianNetwork bn){
 		Distribution Q = new Distribution();   //Distribution to be returned 
 		
 		for(Object x: X.getDomain()) {     //get all domain of X
+			e.set(X, x);
 			Q.put(x,ENUMERATEALL(bn.getVariableListTopologicallySorted(),e));  //Enumerator all in topological order
 		}
 		Q.normalize();

@@ -169,7 +169,8 @@ public class BayesianNetwork {
 		return var;
 	    }
 	}
-	throw new NoSuchElementException();
+		System.out.println("This one is problem "+name);
+		throw new NoSuchElementException();
     }
 
     /**
