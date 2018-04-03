@@ -12,12 +12,6 @@ import bn.inference.*;
 import bn.parser.*;
 
 public class Main {
-	/**
-	 * This is the main class which is intended to be used to test the project. 
-	 * @param args
-	 */
-	
-	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//System.out.println("Arugment: ");
