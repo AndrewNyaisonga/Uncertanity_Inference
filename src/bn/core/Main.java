@@ -155,36 +155,7 @@ public class Main {
 				System.out.println("\n\nProbabilities:" + dist.toString());
 			}
 			
-			if (inference.equals("MyBNApproxInferencer")) {
-				System.out.println("\n\nRejection Inferencing.... \n");
-				if (samples < 1000) System.out.println("WARNING: Insufficient sample count! May be unreliable.");
-				
-				RejectionInference inf = new RejectionInference();
-				
-				final long startTime = System.currentTimeMillis();
-				Distribution dist = inf.RejectingSampling(query, BN, A, samples);        
-				final long endTime = System.currentTimeMillis();
-				
-				System.out.println("\nCompleted " + samples + " samples in " + (endTime-startTime) + " ms.");
-				System.out.format("Average %.3f samples/ms. \n", (double)(samples/(endTime-startTime+0.0)));
-				
-				System.out.println("\n\nProbabilities:" + dist.toString());
-			}
-//			
-//			if (inferencer.equals("MyBNGibbsInferencer")) {
-//				if (samples < 1000) System.out.println("WARNING: Insufficient sample count! May be unreliable.");
-//				
-//				GibbsInferencer inf = new GibbsInferencer();
-//				
-//				final long startTime = System.currentTimeMillis();
-//				Distribution dist = inf.gibbsAsk(query, A, BN, samples);
-//				final long endTime = System.currentTimeMillis();
-//				
-//				System.out.println("Completed " + samples + " samples in " + (endTime-startTime) + " ms.");
-//				System.out.format("Average %.3f samples/ms. \n", (double)(samples/(endTime-startTime+0.0)));
-//				
-//				System.out.println("\n\nProbabilities:" + dist.toString());
-//			}
+
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
