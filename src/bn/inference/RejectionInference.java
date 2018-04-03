@@ -12,6 +12,10 @@ public class RejectionInference {
 		
 	}
 	
+	public Distribution RejectAsk(RandomVariable X, BayesianNetwork bn, Assignment e, int N) {
+		return RejectingSampling(X,bn,e,N);
+	}
+	
 	public Distribution RejectingSampling(RandomVariable X, BayesianNetwork bn, Assignment e, int N) {
 		
 		Distribution Q = new Distribution();
