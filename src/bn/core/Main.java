@@ -22,8 +22,8 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 //		System.out.println("Here be arguments:\n");
-//		for(String arg: args) {System.out.println(arg);}
-//		System.out.println("\n ^ args\n");
+//		for(String arg: args) {System.out.println(arg);
+		//}
 
 		String lang = args[0];			// Language
 		String inference = args[1];	// Take the value of Inference
@@ -43,7 +43,22 @@ public class Main {
 			filename = args[2];		//XML or BIF file
 			parameters = Arrays.copyOfRange(args, 3, args.length);  //Take the parameters as separate
 			break;
+		case "MyBNApproxInferencer":
+			System.out.println("Likelihood chosen!");
+			samples = Integer.parseInt(args[2]); // Get sample
 
+			System.out.println("Number of samples: " + samples + "."); 
+			filename = args[3];		//XML or BIF file
+			parameters = Arrays.copyOfRange(args, 4, args.length);
+			break;
+		case "MyBNGibbsInferencer":
+			System.out.println("Gibbs chosen!");
+			samples = Integer.parseInt(args[2]); // Get sample
+
+			System.out.println("Number of samples: " + samples + "."); 
+			filename = args[3];		//XML or BIF file
+			parameters = Arrays.copyOfRange(args, 4, args.length);
+			break;
 
 		default:
 			System.out.println("Not a valid selection!");
@@ -125,10 +140,11 @@ public class Main {
 			///BN.print(System.out);
 			
 
-			System.out.println("\n\nStarting Inferencing... \n");
+			
 			
 			
 			if (inference.equals("MyBNInferencer")) {
+				System.out.println("\n\nEnumeration Inferencing.... \n");
 				ExactInference inf = new ExactInference(BN);
 				
 				final long startTime = System.currentTimeMillis();
@@ -139,7 +155,36 @@ public class Main {
 				System.out.println("\n\nProbabilities:" + dist.toString());
 			}
 			
-
+			if (inference.equals("MyBNApproxInferencer")) {
+				System.out.println("\n\nRejection Inferencing.... \n");
+				if (samples < 1000) System.out.println("WARNING: Insufficient sample count! May be unreliable.");
+				
+				RejectionInference inf = new RejectionInference();
+				
+				final long startTime = System.currentTimeMillis();
+				Distribution dist = inf.RejectingSampling(query, BN, A, samples);        
+				final long endTime = System.currentTimeMillis();
+				
+				System.out.println("\nCompleted " + samples + " samples in " + (endTime-startTime) + " ms.");
+				System.out.format("Average %.3f samples/ms. \n", (double)(samples/(endTime-startTime+0.0)));
+				
+				System.out.println("\n\nProbabilities:" + dist.toString());
+			}
+//			
+//			if (inferencer.equals("MyBNGibbsInferencer")) {
+//				if (samples < 1000) System.out.println("WARNING: Insufficient sample count! May be unreliable.");
+//				
+//				GibbsInferencer inf = new GibbsInferencer();
+//				
+//				final long startTime = System.currentTimeMillis();
+//				Distribution dist = inf.gibbsAsk(query, A, BN, samples);
+//				final long endTime = System.currentTimeMillis();
+//				
+//				System.out.println("Completed " + samples + " samples in " + (endTime-startTime) + " ms.");
+//				System.out.format("Average %.3f samples/ms. \n", (double)(samples/(endTime-startTime+0.0)));
+//				
+//				System.out.println("\n\nProbabilities:" + dist.toString());
+//			}
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -14,7 +14,7 @@ public class ExactInference {
 		this.B= bn;
 	}
 	public Distribution ENUMERATIONASK(RandomVariable X, Assignment e, BayesianNetwork bn){
-		Distribution Q = new Distribution();   //Distribution to be returned 
+		Distribution Q = new Distribution();   //Distribution to be returned  
 		
 		for(Object x: X.getDomain()) {     //get all domain of X
 			e.set(X, x);
