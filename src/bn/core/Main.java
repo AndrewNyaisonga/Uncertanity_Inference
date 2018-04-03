@@ -21,9 +21,15 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
+<<<<<<< HEAD
 //		System.out.println("Here be arguments:\n");
 //		for(String arg: args) {System.out.println(arg);
 		//}
+=======
+		//System.out.println("Arugment: ");
+		//for(String arg: args) {System.out.println(arg);}
+
+>>>>>>> 187e735783b0bdf8d9bbd50dab2e471828cf2bd2
 
 		String lang = args[0];			// Language
 		String inference = args[1];	// Take the value of Inference
