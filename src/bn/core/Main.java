@@ -158,7 +158,7 @@ public class Main {
 				Distribution dist = inf.RejectAsk(query,BN,A, samples);
 				final long endTime = System.currentTimeMillis();
 				
-				System.out.println("Completed in " + (endTime-startTime) + " ms.");
+				System.out.println("\nCompleted in " + (endTime-startTime) + " ms.");
 				System.out.println("\n\nProbabilities:" + dist.toString());
 			}
 			
