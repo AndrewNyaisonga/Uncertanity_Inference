@@ -24,19 +24,19 @@ public class ExactInference {
 		return Q;
 	}
 	
-	public double ENUMERATEALL(List<RandomVariable> vars, Assignment a){
+	public double ENUMERATEALL(List<RandomVariable> vars, Assignment e){
 		if(vars.isEmpty()) return 1;
 		RandomVariable Y = vars.get(0);
 		List<RandomVariable> rest = vars.subList(1, vars.size());
-		if(a.containsKey(Y)) return B.getProb(Y, a)*ENUMERATEALL(rest,a);
+		if(e.containsKey(Y)) return B.getProb(Y, e)*ENUMERATEALL(rest,e);
 		double totalProbability = 0;
 		for(Object y: Y.getDomain()) {
-			Assignment evidence = a.copy(); //Make a copy to not alter the original
+			Assignment evidence = e.copy(); //Make a copy to not alter the original
 			evidence.set(Y,y);  //Setting the value of y on variable Y
 			
 			try {
 				totalProbability += B.getProb(Y, evidence) * ENUMERATEALL(rest,evidence);
-			}catch(NoSuchElementException e) {  //Just in case we don't find the values after topological sort
+			}catch(NoSuchElementException event) {  //Just in case we don't find the values after topological sort
 					 System.out.println("There was an error");
 			}
 		}

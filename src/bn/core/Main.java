@@ -36,25 +36,27 @@ public class Main {
 			filename = args[2];		//XML or BIF file
 			parameters = Arrays.copyOfRange(args, 3, args.length);  //Take the parameters as separate
 			break;
-		case "MyBNApproxInferencer":
+		case "MyBNRejectionInferencer":
+		case "MyBNLikelihoodInferencer":
 			System.out.println("Approximation Inference!");
 			samples = Integer.parseInt(args[2]); // Get sample
 			filename = args[3];		//XML or BIF file
 			parameters = Arrays.copyOfRange(args, 4, args.length);
 			System.out.println("Sample: " + samples); 
 			break;
-//		case "MyBNGibbsInferencer":
-//			System.out.println("Gibbs Inference!");
-//			samples = Integer.parseInt(args[2]); // Get sample
-//
-//			filename = args[3];		//XML or BIF file
-//			parameters = Arrays.copyOfRange(args, 4, args.length);
-//			System.out.println("Sample: " + samples); 
-//			break;
+		case "MyBNGibbsInferencer":
+			System.out.println("Gibbs Inference!");
+			samples = Integer.parseInt(args[2]); // Get sample
+
+			filename = args[3];		//XML or BIF file
+			parameters = Arrays.copyOfRange(args, 4, args.length);
+			System.out.println("Sample: " + samples); 
+			break;
 
 		default:
-			System.out.println("We only support MyBNInferencer,MyBNApproxInferencer and MyBNGibbsInferencer");
-			return;
+			System.out.println("We only support MyBNInferencer,MyBNRejectionInferencer,MyBNLikelihoodInferencer and MyBNGibbsInferencer");
+			System.out.println("Example java MyBNLikelihoodInferencer 100000 aima-alarm.xml B J true M true");
+			return; 
 
 		}
 		
@@ -123,33 +125,45 @@ public class Main {
 				A.set(evidence[i], evidenceValues[i]);		// evidence are added to assignment
 			}
 			
-			
 			if (inference.equals("MyBNInferencer")) {
 				System.out.println("\n\nEnumeration Inferencing.... \n");
-				ExactInference inf = new ExactInference(BN);
-				
+				ExactInference inf = new ExactInference(BN);	
 				final long startTime = System.currentTimeMillis();
 				Distribution dist = inf.ENUMERATIONASK(query,A, BN); //ENUMERATIONASK(RandomVariable X, Assignment e, BayesianNetwork bn)
-				final long endTime = System.currentTimeMillis();
-				
+				final long endTime = System.currentTimeMillis();	
 				System.out.println("Completed in " + (endTime-startTime) + " ms.");  //Ferguson suggestion of keeping track of time
 				System.out.println("\n\nProbabilities:" + dist.toString());
 			}
 			
-			if (inference.equals("MyBNApproxInferencer")) {
+			if (inference.equals("MyBNRejectionInferencer")) {
 				System.out.println("\n\nRejection Inferencing.... \n");
 				RejectionInference inf = new RejectionInference();
-				
-				
 				final long startTime = System.currentTimeMillis();
 				Distribution dist = inf.RejectAsk(query,BN,A, samples); //RejectAsk(RandomVariable X, BayesianNetwork bn, Assignment e, int N)
 				final long endTime = System.currentTimeMillis();
-				
 				System.out.println("\nCompleted in " + (endTime-startTime) + " ms."); //Ferguson suggestion of keeping track of time
 				System.out.println("\n\nProbabilities:" + dist.toString());
 			}
 			
-
+			if (inference.equals("MyBNLikelihoodInferencer")) {
+				System.out.println("\n\nLikelihood Inferencing.... \n");
+				LikelihoodInference inf = new LikelihoodInference();
+				final long startTime = System.currentTimeMillis();
+				Distribution dist = inf.LIKELIHOODWEIGHTING(query,BN,A,samples); //Distribution LIKELIHOODWEIGHTING(RandomVariable X, BayesianNetwork bn, Assignment e, int N)
+				final long endTime = System.currentTimeMillis();
+				System.out.println("\nCompleted in " + (endTime-startTime) + " ms."); //Ferguson suggestion of keeping track of time
+				System.out.println("\n\nProbabilities:" + dist.toString());
+			}
+			
+			if (inference.equals("MyBNGibbsInferencer")) {
+				System.out.println("\n\n Gibbs Inference .... \n");
+				GibbsInference inf = new GibbsInference();
+				final long startTime = System.currentTimeMillis();
+				Distribution dist = inf.GIBBSASK(query,A,BN,samples);  //Distribution GIBBSASK(RandomVariable X, Assignment e, BayesianNetwork bn, int N)
+				final long endTime = System.currentTimeMillis();
+				System.out.println("\nCompleted in " + (endTime-startTime) + " ms."); //Ferguson suggestion of keeping track of time
+				System.out.println("\n\nProbabilities:" + dist.toString());
+			}
 			
 		} catch (IOException e) { 
 			// TODO Auto-generated catch block 
